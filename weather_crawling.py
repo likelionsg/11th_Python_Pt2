@@ -46,13 +46,12 @@ def store_message(weather_info):
 
     return weather_str
 
-
-url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%8C%80%ED%9D%A5+%EB%82%A0%EC%94%A8'
-response = requests.get(url)
-
-if response.status_code == 200:
-    soup = BeautifulSoup(response.text, 'html.parser')
-    weather_info = build(soup)
-    print(store_message(weather_info))
-else:
-    print(f"Error {response.status_code}")
+def crawl_and_store_message():
+    url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%8C%80%ED%9D%A5+%EB%82%A0%EC%94%A8'
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        weather_info = build(soup)
+        return store_message(weather_info)
+    else:
+        return f"Error {response.status_code}"
